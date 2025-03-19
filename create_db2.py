@@ -38,6 +38,13 @@ try:
 except sqlite3.Error as e:
     print(f"Erreur SQLite : {e}")
 
+try:
+    conn = sqlite3.connect('database.db')
+except sqlite3.Error as e:
+    print("Erreur de connexion à la base de données:", e)
+    return "Erreur de connexion à la base de données"
+
+
 finally:
     # Fermeture de la connexion
     if connection:
