@@ -58,15 +58,6 @@ def ReadBDD():
     conn.close()
     return render_template('read_data.html', data=data)
 
-@app.route('/consultation2/')
-def ReadBDDL():
-    conn = sqlite3.connect('database2.db')
-    cursor = conn.cursor()
-    cursor.execute('SELECT * FROM livres;')
-    data = cursor.fetchall()
-    conn.close()
-    return render_template('read_data2.html', data=data)
-
 @app.route('/enregistrer_client', methods=['GET'])
 def formulaire_client():
     return render_template('formulaire.html')  # afficher le formulaire
@@ -85,6 +76,122 @@ def enregistrer_client():
     conn.commit()
     conn.close()
     return redirect('/consultation/')  # Rediriger vers la page d'accueil après l'enregistrement
+
+# Route pour afficher tous les utilisateurs
+@app.route('/utilisateurs')
+def utilisateurs():
+    try:
+        conn = sqlite3.connect('bibliotheque.db')
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM utilisateurs;")
+        utilisateurs = cursor.fetchall()
+        conn.close()
+        return render_template('utilisateurs.html', utilisateurs=utilisateurs)
+    except sqlite3.Error as e:
+        return f"Erreur de connexion ou d'exécution de la requête: {e}"
+
+# Route pour afficher tous les livres
+@app.route('/livres')
+def livres():
+    try:
+        conn = sqlite3.connect('bibliotheque.db')
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM livres;")
+        livres = cursor.fetchall()
+        conn.close()
+        return render_template('read_data2.html', livres=livres)
+    except sqlite3.Error as e:
+        return f"Erreur de connexion ou d'exécution de la requête: {e}"
+
+# Route pour enregistrer un client (utilisateur)
+@app.route('/enregistrer_client', methods=['GET', 'POST'])
+def enregistrer_client():
+    if request.method == 'POST':
+        nom = request.form['nom']
+        prenom = request.form['prenom']
+        email = request.form['email']
+        mot_de_passe = request.form['mot_de_passe']
+        role = request.form['role']
+
+        try:
+            conn = sqlite3.connect('bibliotheque.db')
+            cursor = conn.cursor()
+            cursor.execute(
+                "INSERT INTO utilisateurs (nom, prenom, email, mot_de_passe, role) VALUES (?, ?, ?, ?, ?)",
+                (nom, prenom, email, mot_de_passe, role)
+            )
+            conn.commit()
+            conn.close()
+            return redirect(url_for('utilisateurs'))
+        except sqlite3.Error as e:
+            return f"Erreur lors de l'enregistrement du client: {e}"
+
+    return render_template('formulaire_client.html')
+
+# Route pour consulter les emprunts
+@app.route('/emprunts')
+def emprunts():
+    try:
+        conn = sqlite3.connect('bibliotheque.db')
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM emprunts;")
+        emprunts = cursor.fetchall()
+        conn.close()
+        return render_template('emprunts.html', emprunts=emprunts)
+    except sqlite3.Error as e:
+        return f"Erreur de connexion ou d'exécution de la requête: {e}"
+
+# Route pour emprunter un livre (ajout dans la table des emprunts)
+@app.route('/emprunter/<int:id_livre>', methods=['POST'])
+def emprunter(id_livre):
+    if not est_authentifie():
+        return redirect(url_for('authentification'))
+
+    try:
+        conn = sqlite3.connect('bibliotheque.db')
+        cursor = conn.cursor()
+
+        # Récupérer l'id de l'utilisateur depuis la session
+        id_utilisateur = session['user_id']
+
+        # Ajouter un emprunt dans la base de données
+        cursor.execute(
+            "INSERT INTO emprunts (id_utilisateur, id_livre, date_emprunt, statut) VALUES (?, ?, ?, ?)",
+            (id_utilisateur, id_livre, '2024-03-19', 'emprunté')
+        )
+        conn.commit()
+        conn.close()
+
+        return redirect(url_for('emprunts'))
+    except sqlite3.Error as e:
+        return f"Erreur lors de l'emprunt du livre: {e}"
+
+# Route pour s'authentifier
+@app.route('/authentification', methods=['GET', 'POST'])
+def authentification():
+    if request.method == 'POST':
+        # Vérifier les identifiants (exemple simple)
+        username = request.form['username']
+        password = request.form['password']
+
+        # Vérifier l'utilisateur dans la base de données
+        try:
+            conn = sqlite3.connect('bibliotheque.db')
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM utilisateurs WHERE email = ? AND mot_de_passe = ?", (username, password))
+            utilisateur = cursor.fetchone()
+            conn.close()
+
+            if utilisateur:
+                session['authentifie'] = True
+                session['user_id'] = utilisateur[0]  # Id de l'utilisateur
+                return redirect(url_for('index'))
+            else:
+                return "Identifiants incorrects", 401
+        except sqlite3.Error as e:
+            return f"Erreur lors de l'authentification: {e}"
+
+    return render_template('formulaire_authentification.html')
                                                                                                                                        
 if __name__ == "__main__":
   app.run(debug=True)
