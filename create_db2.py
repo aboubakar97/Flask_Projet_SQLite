@@ -1,39 +1,21 @@
+
 import sqlite3
 
-try:
-    # Connexion à la base de données SQLite
-    connection = sqlite3.connect('bibliotheque.db')
+connection = sqlite3.connect('bibliotheque.db')
 
-    # Chargement du schéma SQL
-    with open('schema2.sql', 'r', encoding='utf-8') as f:
-        connection.executescript(f.read())
+with open('schema2.sql') as f:
+    connection.executescript(f.read())
 
-    cur = connection.cursor()
+cur = connection.cursor()
 
-    # Insertion des utilisateurs
-    utilisateurs = [
-        ('Dupont', 'Emilie', 'emilie.dupont@example.com', 'password123', 'utilisateur'),
-        ('Leroux', 'Lucas', 'lucas.leroux@example.com', 'securepass', 'utilisateur'),
-        ('Martin', 'Amandine', 'amandine.martin@example.com', 'amandinepass', 'admin')
-    ]
-    cur.executemany("INSERT INTO utilisateurs (nom, prenom, email, mot_de_passe, role) VALUES (?, ?, ?, ?, ?)", utilisateurs)
+cur.execute("INSERT INTO livres (id, prenom, adresse) VALUES (?, ?, ?)",('DUPONT', 'Emilie', '123, Rue des Lilas, 75001 Paris'))
+cur.execute("INSERT INTO clients (nom, prenom, adresse) VALUES (?, ?, ?)",('LEROUX', 'Lucas', '456, Avenue du Soleil, 31000 Toulouse'))
+cur.execute("INSERT INTO clients (nom, prenom, adresse) VALUES (?, ?, ?)",('MARTIN', 'Amandine', '789, Rue des Érables, 69002 Lyon'))
+cur.execute("INSERT INTO clients (nom, prenom, adresse) VALUES (?, ?, ?)",('TREMBLAY', 'Antoine', '1010, Boulevard de la Mer, 13008 Marseille'))
+cur.execute("INSERT INTO clients (nom, prenom, adresse) VALUES (?, ?, ?)",('LAMBERT', 'Sarah', '222, Avenue de la Liberté, 59000 Lille'))
+cur.execute("INSERT INTO clients (nom, prenom, adresse) VALUES (?, ?, ?)",('GAGNON', 'Nicolas', '456, Boulevard des Cerisiers, 69003 Lyon'))
+cur.execute("INSERT INTO clients (nom, prenom, adresse) VALUES (?, ?, ?)",('DUBOIS', 'Charlotte', '789, Rue des Roses, 13005 Marseille'))
+cur.execute("INSERT INTO clients (nom, prenom, adresse) VALUES (?, ?, ?)",('LEFEVRE', 'Thomas', '333, Rue de la Paix, 75002 Paris'))
 
-    # Insertion des livres
-    livres = [
-        ('Le Petit Prince', 'Antoine de Saint-Exupéry', 1943, 'Conte philosophique', 5),
-        ('1984', 'George Orwell', 1949, 'Science-fiction', 3),
-        ('L’Étranger', 'Albert Camus', 1942, 'Roman', 4)
-    ]
-    cur.executemany("INSERT INTO livres (titre, auteur, annee_publication, genre, stock) VALUES (?, ?, ?, ?, ?)", livres)
-
-    # Insertion des emprunts (Emilie emprunte "1984")
-    emprunts = [
-        (1, 2, '2024-03-19', 'emprunté')
-    ]
-    cur.executemany("INSERT INTO emprunts (id_utilisateur, id_livre, date_emprunt, statut) VALUES (?, ?, ?, ?)", emprunts)
-
-    # Validation des changements
-    connection.commit()
-
-
-    connection.close()
+connection.commit()
+connection.close()
