@@ -8,14 +8,14 @@ with open('schema2.sql') as f:
 
 cur = connection.cursor()
 
-cur.execute("INSERT INTO livres (id, prenom, adresse) VALUES (?, ?, ?)",('DUPONT', 'Emilie', '123, Rue des Lilas, 75001 Paris'))
-cur.execute("INSERT INTO clients (nom, prenom, adresse) VALUES (?, ?, ?)",('LEROUX', 'Lucas', '456, Avenue du Soleil, 31000 Toulouse'))
-cur.execute("INSERT INTO clients (nom, prenom, adresse) VALUES (?, ?, ?)",('MARTIN', 'Amandine', '789, Rue des Érables, 69002 Lyon'))
-cur.execute("INSERT INTO clients (nom, prenom, adresse) VALUES (?, ?, ?)",('TREMBLAY', 'Antoine', '1010, Boulevard de la Mer, 13008 Marseille'))
-cur.execute("INSERT INTO clients (nom, prenom, adresse) VALUES (?, ?, ?)",('LAMBERT', 'Sarah', '222, Avenue de la Liberté, 59000 Lille'))
-cur.execute("INSERT INTO clients (nom, prenom, adresse) VALUES (?, ?, ?)",('GAGNON', 'Nicolas', '456, Boulevard des Cerisiers, 69003 Lyon'))
-cur.execute("INSERT INTO clients (nom, prenom, adresse) VALUES (?, ?, ?)",('DUBOIS', 'Charlotte', '789, Rue des Roses, 13005 Marseille'))
-cur.execute("INSERT INTO clients (nom, prenom, adresse) VALUES (?, ?, ?)",('LEFEVRE', 'Thomas', '333, Rue de la Paix, 75002 Paris'))
+cur.execute("INSERT INTO livres (id, created, titre,annee_publication, genre,stock) VALUES (?, ?, ?,?,?,?)",(1, '2025-03-19 10:00:00', 'Le Petit Prince', 1943, 'Conte philosophique', 5))
+cur.execute("INSERT INTO livres (id, created, titre,annee_publication, genre,stock) VALUES (?, ?, ?,?,?,?)",(2, '2025-0-19 10:05:00', '1984', 1949, 'Science-fiction', 3))
+cur.execute("INSERT INTO livres (id, created, titre,annee_publication, genre,stock) VALUES (?, ?, ?,?,?,?)",(3, '2025-03-19 10:10:00', 'L’Étranger', 1942, 'Roman', 4))
+cur.execute("INSERT INTO livres (id, created, titre,annee_publication, genre,stock) VALUES (?, ?, ?,?,?,?)",(4, '2025-03-19 10:15:00', 'Moby Dick', 1851, 'Aventure', 2))
+cur.execute("INSERT INTO livres (id, created, titre,annee_publication, genre,stock) VALUES (?, ?, ?,?,?,?)",(5, '2025-03-19 10:20:00', 'Pride and Prejudice', 1813, 'Romance', 6))
+cur.execute("INSERT INTO livres (id, created, titre,annee_publication, genre,stock) VALUES (?, ?, ?,?,?,?)",(6, '2025-03-19 10:25:00', 'The Great Gatsby', 1925, 'Roman', 7))
 
 connection.commit()
 connection.close()
+
+);
