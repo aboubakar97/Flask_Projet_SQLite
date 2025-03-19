@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion de Bibliothèque</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha1/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Liste des Clients de la Bibliothèque</h1>
+        
+        <!-- Affichage d'un message d'erreur si applicable -->
+        {% if error %}
+            <div class="alert alert-danger" role="alert">
+                Identifiants incorrects. Veuillez réessayer.
+            </div>
+        {% endif %}
+
+        <!-- Tableau affichant les données -->
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Adresse</th>
+                    <th>Date d'enregistrement</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for client in data %}
+                <tr>
+                    <td>{{ client[0] }}</td>  <!-- ID du client -->
+                    <td>{{ client[1] }}</td>  <!-- Nom -->
+                    <td>{{ client[2] }}</td>  <!-- Prénom -->
+                    <td>{{ client[3] }}</td>  <!-- Adresse -->
+                    <td>{{ client[4] }}</td>  <!-- Date d'enregistrement -->
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="text-center">
+            <a href="{{ url_for('enregistrer_client') }}" class="btn btn-primary">Ajouter un Nouveau Client</a>
+        </div>
+    </div>
+
+    <!-- Optionnel : Ajouter des scripts JS (comme pour Bootstrap) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha1/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
