@@ -8,6 +8,7 @@ CREATE TABLE utilisateurs (
     email VARCHAR(150) UNIQUE NOT NULL,
     mot_de_passe VARCHAR(255) NOT NULL,
     role ENUM('utilisateur', 'admin') NOT NULL
+    role TEXT NOT NULL
 );
 
 -- Table des livres
