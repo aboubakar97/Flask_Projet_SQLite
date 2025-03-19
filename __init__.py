@@ -104,8 +104,8 @@ def livres():
         return f"Erreur de connexion ou d'exécution de la requête: {e}"
 
 # Route pour enregistrer un client (utilisateur)
-@app.route('/enregistrer_client', methods=['GET', 'POST'])
-def enregistrer_client():
+@app.route('/enregistrer_utilisateur', methods=['GET', 'POST'])
+def enregistrer_utilisateur():
     if request.method == 'POST':
         nom = request.form['nom']
         prenom = request.form['prenom']
