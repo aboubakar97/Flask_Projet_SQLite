@@ -19,7 +19,7 @@ CREATE TABLE livres (
     auteur TEXT NOT NULL,
     annee_publication DATE NOT NULL,
     genre TEXT NOT NULL,
-    stock INTEGER NOT NULL 
+    stock NUMERIC NOT NULL 
 );
 
 -- Table des emprunts (gestion des prêts et retours)
