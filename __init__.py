@@ -67,11 +67,6 @@ def enregistrer_client():
     nom = request.form['nom']
     prenom = request.form['prenom']
 
-@app.route('/enregistrer_client', methods=['POST'])
-def enregistrer_client():
-    nom = request.form['nom']
-    prenom = request.form['prenom']
-
     # Connexion à la base de données
     conn = sqlite3.connect('database.db')
     cursor = conn.cursor()
