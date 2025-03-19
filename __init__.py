@@ -69,7 +69,7 @@ def enregistrer_client():
 
 @app.route('/livres/')
 def livres():
-    conn = sqlite3.connect('.db')
+    conn = sqlite3.connect('bibliotheque.db')
     cursor = conn.cursor()
     cursor.execute('SELECT * FROM livres;')
     data = cursor.fetchall()
