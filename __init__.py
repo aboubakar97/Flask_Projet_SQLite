@@ -67,24 +67,21 @@ def enregistrer_client():
     nom = request.form['nom']
     prenom = request.form['prenom']
 
-@app.route('/livres/')
-def livres():
-    conn = sqlite3.connect('bibliotheque.db')
-    cursor = conn.cursor()
-    cursor.execute('SELECT * FROM livres;')
-    data = cursor.fetchall()
-    conn.close()
-    return render_template('read_data2.html', data=data)
+@app.route('/enregistrer_client', methods=['POST'])
+def enregistrer_client():
+    nom = request.form['nom']
+    prenom = request.form['prenom']
 
     # Connexion à la base de données
     conn = sqlite3.connect('database.db')
     cursor = conn.cursor()
 
     # Exécution de la requête SQL pour insérer un nouveau client
-    cursor.execute('INSERT INTO livres (id,created, titre, prenom, adresse) VALUES (?, ?, ?, ?)', (1002938, nom, prenom, "ICI"))
+    cursor.execute('INSERT INTO clients (created, nom, prenom, adresse) VALUES (?, ?, ?, ?)', (1002938, nom, prenom, "ICI"))
     conn.commit()
     conn.close()
-    return redirect('/consultation/')  # Rediriger vers la page d'accueil après l'enregistrement
+    return redirect('/consultation/') 
+    
 @app.route('/consultation_livres/')
 def clivres():
     conn = sqlite3.connect('bibliotheque.db')
