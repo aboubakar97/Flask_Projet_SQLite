@@ -81,11 +81,18 @@ def livres():
     cursor = conn.cursor()
 
     # Exécution de la requête SQL pour insérer un nouveau client
-    cursor.execute('INSERT INTO clients (created, nom, prenom, adresse) VALUES (?, ?, ?, ?)', (1002938, nom, prenom, "ICI"))
+    cursor.execute('INSERT INTO livres (id,created, titre, prenom, adresse) VALUES (?, ?, ?, ?)', (1002938, nom, prenom, "ICI"))
     conn.commit()
     conn.close()
     return redirect('/consultation/')  # Rediriger vers la page d'accueil après l'enregistrement
-
+@app.route('/consultation_livres/')
+def clivres():
+    conn = sqlite3.connect('bibliotheque.db')
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM livres;')
+    data = cursor.fetchall()
+    conn.close()
+    return render_template('read_data2.html', data=data)
 
                                                                                                                                        
 if __name__ == "__main__":
