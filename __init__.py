@@ -99,7 +99,7 @@ def livres():
         cursor.execute("SELECT * FROM livres;")
         livres = cursor.fetchall()
         conn.close()
-        return render_template('read_data2.html', livres=livres)
+        return render_template('read_data2.html', data=data)
     except sqlite3.Error as e:
         return f"Erreur de connexion ou d'exécution de la requête: {e}"
 
