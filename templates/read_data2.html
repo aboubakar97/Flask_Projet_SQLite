@@ -153,14 +153,6 @@
 <body>
     <header>
         <h1>Bienvenue à la Bibliothèque</h1>
-        <nav>
-            <ul>
-                <li><a href="livres.html">Gestion des Livres</a></li>
-                <li><a href="utilisateurs.html">Gestion des Utilisateurs</a></li>
-                <li><a href="emprunts.html">Emprunts</a></li>
-                <li><a href="statistiques.html">Statistiques</a></li>
-            </ul>
-        </nav>
     </header>
 
     <div class="container">
@@ -212,6 +204,41 @@
     <footer>
         <p>&copy; 2025 Bibliothèque. Tous droits réservés.</p>
     </footer>
+    <div class="container">
+        <h1>Liste des Livres de la Bibliothèque</h1>
+
+        <!-- Table pour afficher les livres -->
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Créé le</th>
+                    <th>Titre</th>
+                    <th>Auteur</th>
+                    <th>Année de Publication</th>
+                    <th>Genre</th>
+                    <th>Stock</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in data %}
+                <tr>
+                    <td>{{ row[0] }}</td>
+                    <td>{{ row[1] }}</td>
+                    <td>{{ row[2] }}</td>
+                    <td>{{ row[3] }}</td>
+                    <td>{{ row[4] }}</td>
+                    <td>{{ row[5] }}</td>
+                    <td>{{ row[6] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Effet de vague en arrière-plan -->
+    <div class="wave"></div>
+
 
     <script>
         // Simuler une base de données avec un tableau
