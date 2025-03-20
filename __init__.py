@@ -111,6 +111,10 @@ def enregistrer_livre():
     
     return redirect('/consultation_livres/')  # Redirige vers la liste des liv
 
+@app.route('/supprimer_livre', methods=['GET'])
+def suppression():
+    return render_template('supprimer_livre.html')
+
 @app.route('/supprimer_livre', methods=['POST'])
 def supprimer_livre():
     id = request.form['id']
