@@ -4,26 +4,107 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ajouter un Livre</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap');
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 500px;
+            background-color: #fff;
+            padding: 40px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+            border-radius: 20px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            text-align: center;
+            color: #444;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        label {
+            font-weight: 600;
+            color: #333;
+            display: block;
+            margin: 10px 0 5px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #007bff, #00bfff);
+            border: none;
+            color: #fff;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: linear-gradient(135deg, #0056b3, #0086d4);
+        }
+    </style>
 </head>
 <body>
-    <h1>Ajouter un nouveau livre</h1>
-    <form action="./ajouter_livre" method="POST">
-        <label for="titre">Titre :</label>
-        <input type="text" id="titre" name="titre" required><br><br>
-        
-        <label for="auteur">Auteur :</label>
-        <input type="text" id="auteur" name="auteur" required><br><br>
-        
-        <label for="annee_publication">Année de publication :</label>
-        <input type="number" id="annee_publication" name="annee_publication" required><br><br>
-        
-        <label for="genre">Genre :</label>
-        <input type="text" id="genre" name="genre" required><br><br>
-        
-        <label for="stock">Stock :</label>
-        <input type="number" id="stock" name="stock" required><br><br>
-        
-        <button type="submit">Ajouter</button>
-    </form>
+    <div class="container">
+        <h1>Ajouter un Livre</h1>
+        <form action="/ajouter_livre" method="POST">
+            <label for="titre">Titre :</label>
+            <input type="text" id="titre" name="titre" required>
+            
+            <label for="auteur">Auteur :</label>
+            <input type="text" id="auteur" name="auteur" required>
+            
+            <label for="annee_publication">Année de publication :</label>
+            <input type="number" id="annee_publication" name="annee_publication" required>
+            
+            <label for="genre">Genre :</label>
+            <input type="text" id="genre" name="genre" required>
+            
+            <label for="stock">Stock :</label>
+            <input type="number" id="stock" name="stock" required>
+            
+            <button type="submit">Ajouter</button>
+        </form>
+    </div>
 </body>
 </html>
