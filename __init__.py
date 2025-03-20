@@ -86,6 +86,33 @@ def clivres():
     conn.close()
     return render_template('read_data2.html', data=data)
 
+@app.route('/ajouter_livre', methods=['GET'])
+def formulaire_livre():
+    return render_template('form_livre.html')  # Afficher le formulaire
+
+@app.route('/ajouter_livre', methods=['POST'])
+def enregistrer_livre():
+    titre = request.form['titre']
+    auteur = request.form['auteur']
+    annee_publication = request.form['annee_publication']
+    genre = request.form['genre']
+    stock = request.form['stock']
+
+    # Générer une date de création
+    created = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
+    # Connexion à la base de données
+    conn = sqlite3.connect('bibliotheque.db')
+    cursor = conn.cursor()
+
+    # Exécution de la requête SQL pour insérer un nouveau livre
+    cursor.execute('INSERT INTO livres (id,created, titre, auteur, annee_publication, genre, stock) VALUES (?, ?, ?, ?, ?, ?, ?)',
+                   (id, created, titre, auteur, annee_publication, genre, stock))
+    conn.commit()
+    conn.close()
+
+    return redirect('/consultation_livres/')  # Rediriger vers la page qui affiche la liste des livres
+
                                                                                                                                        
 if __name__ == "__main__":
   app.run(debug=True)
