@@ -85,11 +85,12 @@ def clivres():
     data = cursor.fetchall()
     conn.close()
     return render_template('read_data2.html', data=data)
-
+# Route GET pour afficher le formulaire
 @app.route('/ajouter_livre', methods=['GET'])
 def formulaire_livre():
-    return render_template('form_livre.html')  # Afficher le formulaire
+    return render_template('form_livre.html')
 
+# Route POST pour enregistrer un livre
 @app.route('/ajouter_livre', methods=['POST'])
 def enregistrer_livre():
     titre = request.form['titre']
@@ -98,20 +99,18 @@ def enregistrer_livre():
     genre = request.form['genre']
     stock = request.form['stock']
 
-    # Générer une date de création
-    created = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-
     # Connexion à la base de données
     conn = sqlite3.connect('bibliotheque.db')
     cursor = conn.cursor()
 
-    # Exécution de la requête SQL pour insérer un nouveau livre
-    cursor.execute('INSERT INTO livres (created, titre, auteur, annee_publication, genre, stock) VALUES (?, ?, ?, ?, ?, ?)',
-                   ( created, titre, auteur, annee_publication, genre, stock))
+    # Exécution de la requête SQL pour insérer un livre
+    cursor.execute('INSERT INTO livres (titre, auteur, annee_publication, genre, stock) VALUES (?, ?, ?, ?, ?)', 
+                   (titre, auteur, annee_publication, genre, stock))
     conn.commit()
     conn.close()
+    
+    return redirect('/consultation_livres/')  # Redirige vers la liste des liv
 
-    return redirect('/consultation_livres/')  # Rediriger vers la page qui affiche la liste des livres
 
                                                                                                                                        
 if __name__ == "__main__":
