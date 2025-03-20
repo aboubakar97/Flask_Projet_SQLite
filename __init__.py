@@ -92,6 +92,7 @@ def formulaire_livre():
 
 @app.route('/ajouter_livre', methods=['POST'])
 def enregistrer_livre():
+    id = request.form['id']
     titre = request.form['titre']
     auteur = request.form['auteur']
     annee_publication = request.form['annee_publication']
