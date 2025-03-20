@@ -25,17 +25,17 @@ header h1 {
     font-weight: 700;
 }
 
-nav ul {
+nav ul ol {
     list-style-type: none;
     padding: 0;
 }
 
-nav ul li {
+nav ul ol li {
     display: inline;
     margin-right: 20px;
 }
 
-nav ul li a {
+nav ul ol li a {
     text-decoration: none;
     color: #fff;
     font-size: 1.2rem;
@@ -45,7 +45,7 @@ nav ul li a {
     transition: color 0.3s ease;
 }
 
-nav ul li a:hover {
+nav ul ol li a:hover {
     color: #00bfff;
 }
         body {
@@ -195,7 +195,12 @@ nav ul li a:hover {
         <h1>Bienvenue à la Bibliothèque</h1>
         <nav>
             <ul>
-                <li><a href="livres.html">Gestion des Livres</a></li>
+                <li>Gestion des Livres
+                    <ol>
+                        <li><a href="form_livre.html">Ajouter livre</a></li>
+                        <li><a href="supprimer_livre.html">Supprimer livre</a></li>
+                    </ol>
+                </li>
                 <li><a href="utilisateurs.html">Gestion des Utilisateurs</a></li>
                 <li><a href="emprunts.html">Emprunts</a></li>
                 <li><a href="statistiques.html">Statistiques</a></li>
