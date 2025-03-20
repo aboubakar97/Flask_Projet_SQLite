@@ -111,6 +111,17 @@ def enregistrer_livre():
     
     return redirect('/consultation_livres/')  # Redirige vers la liste des liv
 
+@app.route('/supprimer_livre', methods=['POST'])
+def supprimer_livre():
+    id = request.form['id']
+    connection = sqlite3.connect('bibliotheque.db')
+    cursor = connection.cursor()
+    cursor.execute("DELETE FROM livres WHERE id = ?", (id,))
+    connection.commit()
+    connection.close()
+    
+    return redirect('/consultation_livres/')
+
 
                                                                                                                                        
 if __name__ == "__main__":
