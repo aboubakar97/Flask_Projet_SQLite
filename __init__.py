@@ -92,7 +92,6 @@ def formulaire_livre():
 
 @app.route('/ajouter_livre', methods=['POST'])
 def enregistrer_livre():
-    id = request.form['id']
     titre = request.form['titre']
     auteur = request.form['auteur']
     annee_publication = request.form['annee_publication']
@@ -107,8 +106,8 @@ def enregistrer_livre():
     cursor = conn.cursor()
 
     # Exécution de la requête SQL pour insérer un nouveau livre
-    cursor.execute('INSERT INTO livres (id,created, titre, auteur, annee_publication, genre, stock) VALUES (?, ?, ?, ?, ?, ?, ?)',
-                   (id, created, titre, auteur, annee_publication, genre, stock))
+    cursor.execute('INSERT INTO livres (created, titre, auteur, annee_publication, genre, stock) VALUES (?, ?, ?, ?, ?, ?)',
+                   ( created, titre, auteur, annee_publication, genre, stock))
     conn.commit()
     conn.close()
 
