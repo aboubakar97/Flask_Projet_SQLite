@@ -3,126 +3,194 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestion des Livres</title>
+    <title>Liste des Livres</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap');
+
+        /* Styles globaux */
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
             margin: 0;
             padding: 0;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            width: 100vw;
+            flex-direction: column;
         }
-        header {
-            background-color: #4CAF50;
-            color: white;
-            text-align: center;
-            padding: 15px 0;
-        }
-        nav ul {
-            list-style-type: none;
-            padding: 0;
-            text-align: center;
-            background-color: #333;
-            margin: 0;
-        }
-        nav ul li {
-            display: inline;
-            margin: 0 15px;
-        }
-        nav ul li a {
-            color: white;
-            text-decoration: none;
-            font-size: 18px;
-        }
-        nav ul li a:hover {
-            text-decoration: underline;
-        }
-        .content {
-            margin: 30px;
-        }
-        .form-container {
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
             background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+            border-radius: 20px;
+            overflow: auto;
+            animation: fadeIn 1s ease-in-out;
         }
-        .form-container input {
-            padding: 10px;
-            margin: 10px 0;
-            width: 100%;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
-        .form-container button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
+
+        h1 {
+            text-align: center;
+            color: #444;
+            font-size: 2.8rem;
+            margin-bottom: 40px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            background: linear-gradient(135deg, #007bff, #00bfff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-        .form-container button:hover {
-            background-color: #45a049;
-        }
+
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 30px;
+            margin-top: 20px;
         }
-        table, th, td {
-            border: 1px solid #ddd;
-        }
+
         th, td {
-            padding: 10px;
+            padding: 18px;
             text-align: left;
+            border-bottom: 1px solid #e0e0e0;
         }
+
         th {
-            background-color: #4CAF50;
-            color: white;
+            background-color: #007bff;
+            color: #fff;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            position: sticky;
+            top: 0;
+            z-index: 1;
         }
-        .actions button {
-            background-color: red;
+
+        tr {
+            transition: all 0.3s ease;
+        }
+
+        tr:hover {
+            background-color: #f8f9fa;
+            transform: scale(1.02);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        td {
+            font-size: 1rem;
+            color: #555;
+        }
+
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #fff;
+            padding: 15px;
+            background-color: #007bff;
+            font-weight: 600;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23007bff" fill-opacity="0.1" d="M0,256L48,240C96,224,192,192,288,181.3C384,171,480,181,576,192C672,203,768,213,864,202.7C960,192,1056,160,1152,149.3C1248,139,1344,149,1392,154.7L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
+            background-size: cover;
+            z-index: -1;
+        }
+
+        .form-container {
+            margin: 20px 0;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-container input, .form-container select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .form-container button {
+            padding: 10px 20px;
+            background-color: #007bff;
             color: white;
             border: none;
-            padding: 5px 10px;
-            border-radius: 4px;
+            border-radius: 5px;
             cursor: pointer;
         }
-        .actions button:hover {
-            background-color: darkred;
+
+        .form-container button:hover {
+            background-color: #0056b3;
         }
+
     </style>
 </head>
 <body>
     <header>
-        <h1>Gestion des Livres</h1>
+        <h1>Bienvenue à la Bibliothèque</h1>
+        <nav>
+            <ul>
+                <li><a href="livres.html">Gestion des Livres</a></li>
+                <li><a href="utilisateurs.html">Gestion des Utilisateurs</a></li>
+                <li><a href="emprunts.html">Emprunts</a></li>
+                <li><a href="statistiques.html">Statistiques</a></li>
+            </ul>
+        </nav>
     </header>
 
-    <nav>
-        <ul>
-            <li><a href="index.html">Accueil</a></li>
-            <li><a href="utilisateurs.html">Gestion des Utilisateurs</a></li>
-            <li><a href="emprunts.html">Emprunts</a></li>
-            <li><a href="statistiques.html">Statistiques</a></li>
-        </ul>
-    </nav>
+    <div class="container">
+        <h1>Liste des Livres de la Bibliothèque</h1>
 
-    <div class="content">
+        <!-- Formulaire pour ajouter un livre -->
         <div class="form-container">
-            <h2>Ajouter un Livre</h2>
-            <form id="ajouterLivreForm">
-                <input type="text" id="titre" placeholder="Titre" required>
-                <input type="text" id="auteur" placeholder="Auteur" required>
-                <input type="number" id="annee_publication" placeholder="Année de Publication" required>
-                <input type="text" id="genre" placeholder="Genre" required>
+            <h2>Ajouter un Nouveau Livre</h2>
+            <form id="addBookForm">
+                <input type="text" id="title" placeholder="Titre" required>
+                <input type="text" id="author" placeholder="Auteur" required>
+                <input type="number" id="year" placeholder="Année de Publication" required>
+                <select id="genre" required>
+                    <option value="">Choisir un Genre</option>
+                    <option value="Fiction">Fiction</option>
+                    <option value="Non-Fiction">Non-Fiction</option>
+                    <option value="Science">Science</option>
+                    <option value="Histoire">Histoire</option>
+                </select>
                 <input type="number" id="stock" placeholder="Stock" required>
-                <button type="submit">Ajouter</button>
+                <button type="submit">Ajouter Livre</button>
             </form>
         </div>
 
-        <h2>Liste des Livres</h2>
-        <table id="livresTable">
+        <!-- Table pour afficher les livres -->
+        <table id="bookTable">
             <thead>
                 <tr>
+                    <th>ID</th>
+                    <th>Créé le</th>
                     <th>Titre</th>
                     <th>Auteur</th>
                     <th>Année de Publication</th>
@@ -132,57 +200,81 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- Les livres seront ajoutés ici dynamiquement -->
+                <!-- Les données seront insérées ici -->
             </tbody>
         </table>
     </div>
 
-    <script>
-        const livres = [
-            { titre: "Le Petit Prince", auteur: "Antoine de Saint-Exupéry", annee_publication: 1943, genre: "Conte philosophique", stock: 5 },
-            { titre: "1984", auteur: "George Orwell", annee_publication: 1949, genre: "Science-fiction", stock: 3 },
-            { titre: "L’Étranger", auteur: "Albert Camus", annee_publication: 1942, genre: "Roman", stock: 4 },
-            { titre: "Moby Dick", auteur: "Herman Melville", annee_publication: 1851, genre: "Aventure", stock: 2 },
-            { titre: "Pride and Prejudice", auteur: "Jane Austen", annee_publication: 1813, genre: "Romance", stock: 6 },
-            { titre: "The Great Gatsby", auteur: "Scott Fitzgerald, F.", annee_publication: 1925, genre: "Roman", stock: 7 }
-        ];
+    <!-- Effet de vague en arrière-plan -->
+    <div class="wave"></div>
 
-        function afficherLivres() {
-            const tableBody = document.querySelector("#livresTable tbody");
-            tableBody.innerHTML = ""; 
-            livres.forEach((livre, index) => {
+    <!-- Footer fixé en bas -->
+    <footer>
+        <p>&copy; 2025 Bibliothèque. Tous droits réservés.</p>
+    </footer>
+
+    <script>
+        // Simuler une base de données avec un tableau
+        let books = [];
+
+        // Fonction pour afficher les livres
+        function displayBooks() {
+            const tableBody = document.querySelector("#bookTable tbody");
+            tableBody.innerHTML = "";
+            books.forEach((book, index) => {
                 const row = document.createElement("tr");
                 row.innerHTML = `
-                    <td>${livre.titre}</td>
-                    <td>${livre.auteur}</td>
-                    <td>${livre.annee_publication}</td>
-                    <td>${livre.genre}</td>
-                    <td>${livre.stock}</td>
-                    <td class="actions">
-                        <button onclick="supprimerLivre(${index})">Supprimer</button>
+                    <td>${index + 1}</td>
+                    <td>${book.createdAt}</td>
+                    <td>${book.title}</td>
+                    <td>${book.author}</td>
+                    <td>${book.year}</td>
+                    <td>${book.genre}</td>
+                    <td>${book.stock}</td>
+                    <td>
+                        <button onclick="editBook(${index})">Modifier</button>
+                        <button onclick="deleteBook(${index})">Supprimer</button>
                     </td>
                 `;
                 tableBody.appendChild(row);
             });
         }
 
-        document.getElementById("ajouterLivreForm").addEventListener("submit", function(event) {
+        // Fonction pour ajouter un livre
+        document.getElementById("addBookForm").addEventListener("submit", function(event) {
             event.preventDefault();
-            const titre = document.getElementById("titre").value;
-            const auteur = document.getElementById("auteur").value;
-            const annee_publication = document.getElementById("annee_publication").value;
-            const genre = document.getElementById("genre").value;
-            const stock = document.getElementById("stock").value;
-            livres.push({ titre, auteur, annee_publication, genre, stock });
-            afficherLivres();
+            const newBook = {
+                title: document.getElementById("title").value,
+                author: document.getElementById("author").value,
+                year: document.getElementById("year").value,
+                genre: document.getElementById("genre").value,
+                stock: document.getElementById("stock").value,
+                createdAt: new Date().toLocaleDateString()
+            };
+            books.push(newBook);
+            displayBooks();
+            this.reset();
         });
 
-        function supprimerLivre(index) {
-            livres.splice(index, 1);
-            afficherLivres();
+        // Fonction pour supprimer un livre
+        function deleteBook(index) {
+            books.splice(index, 1);
+            displayBooks();
         }
 
-        window.onload = afficherLivres;
+        // Fonction pour modifier un livre
+        function editBook(index) {
+            const book = books[index];
+            document.getElementById("title").value = book.title;
+            document.getElementById("author").value = book.author;
+            document.getElementById("year").value = book.year;
+            document.getElementById("genre").value = book.genre;
+            document.getElementById("stock").value = book.stock;
+            deleteBook(index);
+        }
+
+        // Initialiser l'affichage des livres
+        displayBooks();
     </script>
 </body>
 </html>
