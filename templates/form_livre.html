@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
@@ -8,18 +7,15 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap');
 
-        /* Styles globaux */
         body {
             font-family: 'Montserrat', sans-serif;
             background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
             margin: 0;
             padding: 0;
-            color: #333;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            width: 100vw;
             flex-direction: column;
         }
 
@@ -32,17 +28,6 @@
             border-radius: 20px;
             overflow: auto;
             animation: fadeIn 1s ease-in-out;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
         }
 
         h1 {
@@ -96,6 +81,21 @@
             color: #555;
         }
 
+        button {
+            padding: 8px 15px;
+            margin: 5px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
         footer {
             position: fixed;
             bottom: 0;
@@ -108,47 +108,6 @@
             font-weight: 600;
             box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
         }
-
-        .wave {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 100px;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23007bff" fill-opacity="0.1" d="M0,256L48,240C96,224,192,192,288,181.3C384,171,480,181,576,192C672,203,768,213,864,202.7C960,192,1056,160,1152,149.3C1248,139,1344,149,1392,154.7L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
-            background-size: cover;
-            z-index: -1;
-        }
-
-        .form-container {
-            margin: 20px 0;
-            padding: 20px;
-            background-color: #f8f9fa;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .form-container input, .form-container select {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-
-        .form-container button {
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .form-container button:hover {
-            background-color: #0056b3;
-        }
-
     </style>
 </head>
 <body>
@@ -157,29 +116,10 @@
     </header>
 
     <div class="container">
-        <h1>Liste des Livres de la Bibliothèque</h1>
-
-        <!-- Formulaire pour ajouter un livre -->
-        <div class="form-container">
-            <h2>Ajouter un Nouveau Livre</h2>
-            <form id="addBookForm">
-                <input type="text" id="title" placeholder="Titre" required>
-                <input type="text" id="author" placeholder="Auteur" required>
-                <input type="number" id="year" placeholder="Année de Publication" required>
-                <select id="genre" required>
-                    <option value="">Choisir un Genre</option>
-                    <option value="Fiction">Fiction</option>
-                    <option value="Non-Fiction">Non-Fiction</option>
-                    <option value="Science">Science</option>
-                    <option value="Histoire">Histoire</option>
-                </select>
-                <input type="number" id="stock" placeholder="Stock" required>
-                <button type="submit">Ajouter Livre</button>
-            </form>
-        </div>
+        <h1>Liste des Livres</h1>
 
         <!-- Table pour afficher les livres -->
-        <table id="bookTable">
+        <table>
             <thead>
                 <tr>
                     <th>ID</th>
@@ -193,35 +133,6 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- Les données seront insérées ici -->
-            </tbody>
-        </table>
-    </div>
-
-    <!-- Effet de vague en arrière-plan -->
-    <div class="wave"></div>
-
-    <!-- Footer fixé en bas -->
-    <footer>
-        <p>&copy; 2025 Bibliothèque. Tous droits réservés.</p>
-    </footer>
-    <div class="container">
-        <h1>Liste des Livres de la Bibliothèque</h1>
-
-        <!-- Table pour afficher les livres -->
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Créé le</th>
-                    <th>Titre</th>
-                    <th>Auteur</th>
-                    <th>Année de Publication</th>
-                    <th>Genre</th>
-                    <th>Stock</th>
-                </tr>
-            </thead>
-            <tbody>
                 {% for row in data %}
                 <tr>
                     <td>{{ row[0] }}</td>
@@ -231,78 +142,25 @@
                     <td>{{ row[4] }}</td>
                     <td>{{ row[5] }}</td>
                     <td>{{ row[6] }}</td>
+                    <td>
+                        <!-- Formulaire de modification -->
+                        <form action="/modifier_livre/{{ row[0] }}" method="POST" style="display:inline-block;">
+                            <button type="submit">Modifier</button>
+                        </form>
+
+                        <!-- Formulaire de suppression -->
+                        <form action="/supprimer_livre/{{ row[0] }}" method="POST" style="display:inline-block;">
+                            <button type="submit">Supprimer</button>
+                        </form>
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
 
-    <!-- Effet de vague en arrière-plan -->
-    <div class="wave"></div>
-
-
-    <script>
-        // Simuler une base de données avec un tableau
-        let books = [];
-
-        // Fonction pour afficher les livres
-        function displayBooks() {
-            const tableBody = document.querySelector("#bookTable tbody");
-            tableBody.innerHTML = "";
-            books.forEach((book, index) => {
-                const row = document.createElement("tr");
-                row.innerHTML = `
-                    <td>${index + 1}</td>
-                    <td>${book.createdAt}</td>
-                    <td>${book.title}</td>
-                    <td>${book.author}</td>
-                    <td>${book.year}</td>
-                    <td>${book.genre}</td>
-                    <td>${book.stock}</td>
-                    <td>
-                        <button onclick="editBook(${index})">Modifier</button>
-                        <button onclick="deleteBook(${index})">Supprimer</button>
-                    </td>
-                `;
-                tableBody.appendChild(row);
-            });
-        }
-
-        // Fonction pour ajouter un livre
-        document.getElementById("addBookForm").addEventListener("submit", function(event) {
-            event.preventDefault();
-            const newBook = {
-                title: document.getElementById("title").value,
-                author: document.getElementById("author").value,
-                year: document.getElementById("year").value,
-                genre: document.getElementById("genre").value,
-                stock: document.getElementById("stock").value,
-                createdAt: new Date().toLocaleDateString()
-            };
-            books.push(newBook);
-            displayBooks();
-            this.reset();
-        });
-
-        // Fonction pour supprimer un livre
-        function deleteBook(index) {
-            books.splice(index, 1);
-            displayBooks();
-        }
-
-        // Fonction pour modifier un livre
-        function editBook(index) {
-            const book = books[index];
-            document.getElementById("title").value = book.title;
-            document.getElementById("author").value = book.author;
-            document.getElementById("year").value = book.year;
-            document.getElementById("genre").value = book.genre;
-            document.getElementById("stock").value = book.stock;
-            deleteBook(index);
-        }
-
-        // Initialiser l'affichage des livres
-        displayBooks();
-    </script>
+    <footer>
+        <p>&copy; 2025 Bibliothèque. Tous droits réservés.</p>
+    </footer>
 </body>
 </html>
