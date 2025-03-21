@@ -1,0 +1,15 @@
+import sqlite3
+
+connection = sqlite3.connect('users.db')
+
+with open('schema2.sql') as f:
+    connection.executescript(f.read())
+
+cur = connection.cursor()
+
+cur.execute("INSERT INTO utilisateurs (nom,prenom,email,mot_de_passe,role) VALUES (?, ?,?,?,?)",( 'Dupont',	'Jean',	'jean.dupont@email.com'	,'123456','Utilisateur'))
+cur.execute("INSERT INTO utilisateurs (nom,prenom,email,mot_de_passe,role) VALUES (?, ?,?,?,?)",( 'Rousseau',	'Emma',	'emma.rousseau@email.com',	'123456',	'Administrateur'))
+
+
+connection.commit()
+connection.close() 
